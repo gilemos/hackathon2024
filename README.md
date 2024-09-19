@@ -17,6 +17,6 @@ Here you will see two folders:
 2. In the file `src/taskpane/taskpane.js`, add your models's endpoint and apiKey to the variables of the same name
 3. Create a Microsoft Word document in the browser
 4. In your Microsoft Word document, select Share and then Copy Link
-6. Go to terminal and, inside the Chronicle Keeper folder, run npm run start:web -- --document {url you copied}
+6. Go to terminal and, inside the Chronicle Keeper folder, `run npm run start:web -- --document {url you copied}`
 7. If prompted, enable developer mode
 8. If prompted to add a manifest, select yes and add the manifest.xml file under the Chronicle Keeper folder
