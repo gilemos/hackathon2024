@@ -10,13 +10,24 @@
      margin: 0;
      padding: 0;
      background-color: #f3f2fa;
+     overflow-x: hidden;
  }
 
  /* Input and output field styles */
  
  .chatDiv {
     width: 100%;
-    height: 300px;
+    height: calc(100vh - 100px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+ }
+
+ .inputDiv {
+    display:flex;
+    flex-direction:row;
+    width: 100%;
+    position: absolute;
+    bottom: 15px;
  }
 
  .inputField {
@@ -25,15 +36,6 @@
     border-radius: 15px;
     border-width: 0px;
     margin-top: 10px;
- }
-
- .responseField {
-    width: 100%;
-    height: 300px;
-    border-radius: 15px;
-    border-width: 0px;
-    background-color: #5b42a0;
-    color: white;
  }
 
  /* Text bubble styles */
