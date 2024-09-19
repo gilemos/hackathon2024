@@ -9,35 +9,66 @@
      height: 100%;
      margin: 0;
      padding: 0;
- }
- 
- ul {
-     margin: 0;
-     padding: 0;
- }
- 
- .ms-welcome__header {
-    padding: 20px;
-    padding-bottom: 30px;
-    padding-top: 100px;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    align-items: center;
+     background-color: #f3f2fa;
  }
 
+ /* Input and output field styles */
+ 
+ .chatDiv {
+    width: 100%;
+    height: 300px;
+ }
+
+ .inputField {
+    width: 100%;
+    height: 40px;
+    border-radius: 15px;
+    border-width: 0px;
+    margin-top: 10px;
+ }
+
+ .responseField {
+    width: 100%;
+    height: 300px;
+    border-radius: 15px;
+    border-width: 0px;
+    background-color: #5b42a0;
+    color: white;
+ }
+
+ /* Text bubble styles */
+ .bubble {
+    --r: 1em;  /* the radius */
+    --t: 1.5em; /* the size of the tail */
+    
+    max-width: 350px;
+    padding: 1em;
+    border-inline: var(--t) solid #0000;
+    border-radius: calc(var(--r) + var(--t))/var(--r);
+    mask: 
+      radial-gradient(100% 100% at var(--_p) 0,#0000 99%,#000 102%) 
+        var(--_p) 100%/var(--t) var(--t) no-repeat,
+      linear-gradient(#000 0 0) padding-box;
+    margin-bottom: 5px;
+  }
+
+  .left {
+    --_p: 0;
+    border-bottom-left-radius: 0 0;
+    place-self: start;
+    background-color: #5b42a0;
+    color: #fff;
+  }
+
+  .right {
+    --_p: 100%;
+    border-bottom-right-radius: 0 0;
+    place-self: end;
+    background-color: white;
+    color: black;
+  }
+
  .ms-welcome__main {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    -webkit-flex-wrap: nowrap;
-    flex-wrap: nowrap;
-    -webkit-align-items: center;
-    align-items: center;
-    -webkit-flex: 1 0 0;
-    flex: 1 0 0;
     padding: 10px 20px;
  }
  
@@ -45,21 +76,7 @@
      width: 100%;
      text-align: center;
  }
- 
- .ms-welcome__features {
-     list-style-type: none;
-     margin-top: 20px;
- }
- 
- .ms-welcome__features.ms-List .ms-ListItem {
-     padding-bottom: 20px;
-     display: -webkit-flex;
-     display: flex;
- }
- 
- .ms-welcome__features.ms-List .ms-ListItem > .ms-Icon {
-     margin-right: 10px;
- }
+
  
  .ms-welcome__action.ms-Button--hero {
      margin-top: 30px;
@@ -73,8 +90,4 @@
 .ms-Button.ms-Button--hero:focus .ms-Button-label{
   color: #005a9e;
   cursor: pointer;
-}
-
-b {
-    font-weight: bold;
 }

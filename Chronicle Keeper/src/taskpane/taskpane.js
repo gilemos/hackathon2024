@@ -15,11 +15,8 @@ const deployment = "giogpt"; //This must match your deployment name.
 Office.onReady((info) => {
   if (info.host === Office.HostType.Word) {
     // Assign event handlers and other initialization logic.
-    /*document.getElementById("insert-paragraph").onclick = () => tryCatch(insertParagraph);*/
-    document.getElementById("apply-style").onclick = () => tryCatch(getSummary);
+    document.getElementById("sendQuestionButton").onclick = () => tryCatch(answerQuestion);
     document.getElementById("sideload-msg").style.display = "none";
-    document.getElementById("app-body").style.display = "flex";
-    /*document.getElementById("run").onclick = run;*/
   }
 });
 
@@ -45,6 +42,52 @@ async function tryCatch(callback) {
   }
 }
 
+async function answerQuestion() {
+  await Word.run(async (context) => {
+
+    // Getting the text from the body
+    var documentBody = context.document.body;
+    context.load(documentBody);
+
+    // Getting the question from the input field
+    var questionInput = document.getElementById('questionInput').value;
+
+    // Posting the question into chat area
+    var newUserBubble = document.createElement("div");
+    newUserBubble.innerText = questionInput;
+    newUserBubble.classList.add("right");
+    newUserBubble.classList.add("bubble");
+    document.getElementById('chatArea').appendChild(newUserBubble);  
+
+    return context.sync()
+    .then(async function(){
+        const client = new AzureOpenAI({ endpoint: endpoint, apiKey:apiKey, apiVersion:apiVersion, deployment:deployment, dangerouslyAllowBrowser: true});
+        const result = await client.chat.completions.create({
+          messages: [
+          { role: "system", content: "You are a helpful assistant. This story pertains to a DnD character." },
+          { role: "user", content: "Hollix has purple hair. What is Hollix's hair color." },
+          { role: "assistant", content: "The character Hollix is described as having purple hair" },
+          { role: "user", content: documentBody.text + ". " + questionInput },
+          ],
+          model: "",
+        });
+
+        // Creating the response bubble
+        for (const choice of result.choices) {
+          console.log(choice.message);
+
+          var newResponseBubble = document.createElement("div");
+          newResponseBubble.innerText = choice.message.content;
+          newResponseBubble.classList.add("left");
+          newResponseBubble.classList.add("bubble");
+          document.getElementById('chatArea').appendChild(newResponseBubble); 
+        }
+
+        await context.sync();
+    })
+  });
+}
+
 async function getSummary() {
   await Word.run(async (context) => {
 
@@ -67,25 +110,5 @@ async function getSummary() {
         }
         console.log(documentBody.text);
     })
-
-    const client = new AzureOpenAI({ endpoint: endpoint, apiKey:apiKey, apiVersion:apiVersion, deployment:deployment, dangerouslyAllowBrowser: true});
-        const result = await client.chat.completions.create({
-          messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          { role: "user", content: "Does Azure OpenAI support customer managed keys?" },
-          { role: "assistant", content: "Yes, customer managed keys are supported by Azure OpenAI?" },
-          { role: "user", content: "Do other Azure AI services support this too?" },
-          ],
-          model: "",
-        });
-
-    const docBody = context.document.body;
-
-    for (const choice of result.choices) {
-      docBody.insertParagraph(choice.message.content,
-        Word.InsertLocation.start);
-    }
-
-    await context.sync();
   });
 }
