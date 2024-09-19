@@ -14,7 +14,7 @@ Here you will see two folders:
 
 ## How to run the code
 1. Create an Azure OpenAI resource
-2. In the file src/taskpane/taskpane.js, add your models's endpoint and apiKey to the variables of the same name
+2. In the file `src/taskpane/taskpane.js`, add your models's endpoint and apiKey to the variables of the same name
 3. Create a Microsoft Word document in the browser
 4. In your Microsoft Word document, select Share and then Copy Link
 6. Go to terminal and, inside the Chronicle Keeper folder, run npm run start:web -- --document {url you copied}
